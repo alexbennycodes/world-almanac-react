@@ -29,7 +29,7 @@ export const CountryCard = ({ data, query }) => {
       <figure>
         <img src={data_imgUrl} alt="Shoes" className="w-full max-h-52" />
       </figure>
-      <div className="card-body py-5">
+      <div className="card-body py-3 px-7">
         <h1 className="card-title text-2xl font-bold">{data_countryName}</h1>
         <div className="uppercase badge rounded-none text-base py-3 bg-slate-600 border-none">
           {data_region}
