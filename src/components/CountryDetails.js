@@ -11,13 +11,17 @@ export const CountryDetails = ({ countryData }) => {
   const data_Currencies = countryData?.currencies
     ? Object.values(countryData?.currencies)
     : "N/A";
+
+  const data_Languages = countryData.languages
+    ? Object.values(countryData.languages).join(", ")
+    : "N/A";
   return (
     <div className="grid md:grid-cols-2 gap-16 items-center my-10">
       <div className="lg:px-16 flex items-center justify-center">
         <img
           src={data_imgUrl}
           alt={`Flag of ${countryData?.name?.common}`}
-          className="md:max-h-[300px] shadow-lg"
+          className="md:max-h-[300px] shadow-lg border"
         />
       </div>
       <div>
@@ -63,6 +67,7 @@ export const CountryDetails = ({ countryData }) => {
         />
       </div>
       <div>
+        <InfoItem title="languages" value={data_Languages} />
         <InfoItem
           title="Currencies"
           value={
@@ -72,6 +77,31 @@ export const CountryDetails = ({ countryData }) => {
                   <p key="currency.name">{`${currency.name}  - (${currency.symbol})`}</p>
                 );
               })}
+            </div>
+          }
+        />
+        <InfoItem
+          title="time zones"
+          value={
+            <div className="flex flex-wrap space-x-2 justify-end">
+              {countryData?.timezones?.map((timezone, i) => {
+                return <p key={timezone}>{timezone} </p>;
+              })}
+            </div>
+          }
+        />
+        <InfoItem
+          title="borders"
+          value={
+            <div className="flex gap-2 flex-wrap justify-end">
+              {countryData?.borders?.map((border) => (
+                <p
+                  key={border}
+                  className="px-3 py-1 bg-gray-300 rounded-md text-sm lg:text-base "
+                >
+                  {border}
+                </p>
+              ))}
             </div>
           }
         />
