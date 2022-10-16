@@ -1,17 +1,20 @@
 import React, { useState, useEffect } from "react";
 import { getSpecificCountry } from "../services/getSpecificCountry";
-import { CountryDetails } from "./CountryDetails";
-import { Spinner } from "./Spinner";
+import { CountryDetails, Navbar, Spinner } from "../components";
+import { useParams } from "react-router-dom";
 
-export const CountryDetailsPage = () => {
+export const CountryDetailsLayout = () => {
+  const { countryCode } = useParams();
+  console.log(countryCode);
   const [countryData, setCountryData] = useState(null);
 
   useEffect(() => {
-    getSpecificCountry(setCountryData, "India");
-  }, []);
+    getSpecificCountry(setCountryData, countryCode);
+  }, [countryCode]);
 
   return (
     <div>
+      <Navbar />
       {countryData ? <CountryDetails countryData={countryData} /> : <Spinner />}
     </div>
   );

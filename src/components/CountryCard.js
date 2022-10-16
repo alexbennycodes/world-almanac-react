@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 export const CountryCard = ({ data, query }) => {
   const data_imgUrl = data?.flags?.svg;
   const data_countryName = data.name.common;
@@ -23,11 +25,18 @@ export const CountryCard = ({ data, query }) => {
       : "hidden");
 
   return (
-    <div
+    <Link
+      to={`/country/${data?.cca3}`}
       className={`card w-full md:w-1/3 lg:w-1/5 bg-base-100 shadow-md hover:shadow-xl hover:scale-105 transition-all duration-200 ease-in-out cursor-pointer ${visibility}`}
     >
       <figure>
-        <img src={data_imgUrl} alt="Shoes" className="w-full max-h-52" />
+        <img
+          src={data_imgUrl}
+          alt="Shoes"
+          className={`w-full max-h-52 ${
+            data_countryName !== "Nepal" ? "object-cover" : ""
+          }`}
+        />
       </figure>
       <div className="card-body py-3 px-7">
         <h1 className="card-title text-2xl font-bold">{data_countryName}</h1>
@@ -53,6 +62,6 @@ export const CountryCard = ({ data, query }) => {
           </p>
         </div>
       </div>
-    </div>
+    </Link>
   );
 };

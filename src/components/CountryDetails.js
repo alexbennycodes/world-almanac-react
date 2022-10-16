@@ -1,6 +1,8 @@
 import { InfoItem } from "./InfoItem";
 
 export const CountryDetails = ({ countryData }) => {
+  document.title = `${countryData?.name?.common} - World Almanac`;
+
   const data_imgUrl = countryData?.flags?.svg;
   const data_nativeName = countryData?.name?.nativeName
     ? Object.values(countryData?.name?.nativeName)[1]
@@ -16,7 +18,7 @@ export const CountryDetails = ({ countryData }) => {
     ? Object.values(countryData.languages).join(", ")
     : "N/A";
   return (
-    <div className="grid md:grid-cols-2 gap-16 items-center my-10">
+    <div className="grid md:grid-cols-2 gap-10 lg:gap-16 items-center my-20 container mx-auto px-5 md:p-0">
       <div className="lg:px-16 flex items-center justify-center">
         <img
           src={data_imgUrl}
@@ -46,6 +48,7 @@ export const CountryDetails = ({ countryData }) => {
             </a>
           }
           className="border-none"
+          valueClassName="whitespace-nowrap overflow-hidden text-ellipsis w-[35vw] lg:w-[300px] text-blue-500"
         />
       </div>
       <div>
@@ -61,8 +64,8 @@ export const CountryDetails = ({ countryData }) => {
         <InfoItem title="region" value={countryData?.region} />
         <InfoItem title="Sub region" value={countryData?.subregion || "N/A"} />
         <InfoItem
-          title="cioc country code"
-          value={countryData?.cioc || "N/A"}
+          title="cca3 country code"
+          value={countryData?.cca3 || "N/A"}
           className="border-none"
         />
       </div>
@@ -72,18 +75,20 @@ export const CountryDetails = ({ countryData }) => {
           title="Currencies"
           value={
             <div>
-              {data_Currencies?.map((currency) => {
-                return (
-                  <p key="currency.name">{`${currency.name}  - (${currency.symbol})`}</p>
-                );
-              })}
+              {data_Currencies !== "N/A"
+                ? data_Currencies?.map((currency) => {
+                    return (
+                      <p key="currency.name">{`${currency.name}  - (${currency.symbol})`}</p>
+                    );
+                  })
+                : data_Currencies}
             </div>
           }
         />
         <InfoItem
           title="time zones"
           value={
-            <div className="flex flex-wrap space-x-2 justify-end">
+            <div className="flex flex-wrap space-x-2">
               {countryData?.timezones?.map((timezone, i) => {
                 return <p key={timezone}>{timezone} </p>;
               })}
@@ -93,15 +98,17 @@ export const CountryDetails = ({ countryData }) => {
         <InfoItem
           title="borders"
           value={
-            <div className="flex gap-2 flex-wrap justify-end">
-              {countryData?.borders?.map((border) => (
-                <p
-                  key={border}
-                  className="px-3 py-1 bg-gray-300 rounded-md text-sm lg:text-base "
-                >
-                  {border}
-                </p>
-              ))}
+            <div className="flex gap-2 flex-wrap">
+              {countryData?.borders
+                ? countryData?.borders?.map((border) => (
+                    <p
+                      key={border}
+                      className="px-3 py-1 bg-gray-300 rounded-md text-sm lg:text-base "
+                    >
+                      {border}
+                    </p>
+                  ))
+                : "N/A"}
             </div>
           }
         />
