@@ -4,6 +4,8 @@ import { RegionFilter } from "../components/RegionFilter";
 import { getAllCountries } from "../services/getAllCountries";
 
 export const AllCountriesLayout = () => {
+  document.title = "World Almanac";
+
   const [countriesData, setCountriesData] = useState(null);
   const [query, setQuery] = useState(null);
   const [filter, setFilter] = useState("all");

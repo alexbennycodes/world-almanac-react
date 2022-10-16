@@ -5,7 +5,6 @@ import { useParams } from "react-router-dom";
 
 export const CountryDetailsLayout = () => {
   const { countryCode } = useParams();
-  console.log(countryCode);
   const [countryData, setCountryData] = useState(null);
 
   useEffect(() => {
