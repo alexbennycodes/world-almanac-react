@@ -1,6 +1,6 @@
 export const SearchBar = ({ setQuery }) => {
   return (
-    <div className="flex items-center w-1/2">
+    <div className="flex items-center w-full md:w-1/2">
       <div className="border border-gray-200 rounded overflow-hidden flex w-full shadow-[0_10px_40px_-5px_rgba(0,0,0,0.1)]">
         <input
           type="text"

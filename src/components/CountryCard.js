@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-export const CountryCard = ({ data, query }) => {
+export const CountryCard = ({ data, query, filter }) => {
   const data_imgUrl = data?.flags?.svg;
   const data_countryName = data.name.common;
   const data_region = data.region ? data.region : "N/A";
@@ -18,6 +18,9 @@ export const CountryCard = ({ data, query }) => {
     ? Object.values(data.currencies)[0].name
     : ["No Currency"];
 
+  const region_visibility =
+    filter === "all" || filter === data_region.toLowerCase() ? "" : "hidden";
+
   const visibility =
     query &&
     (data_countryName.toLowerCase().includes(query.toLowerCase())
@@ -27,7 +30,7 @@ export const CountryCard = ({ data, query }) => {
   return (
     <Link
       to={`/country/${data?.cca3}`}
-      className={`card w-full md:w-1/3 lg:w-1/5 bg-base-100 shadow-md hover:shadow-xl hover:scale-105 transition-all duration-200 ease-in-out cursor-pointer ${visibility}`}
+      className={`card w-full md:w-1/3 lg:w-1/5 bg-base-100 shadow-md hover:shadow-xl hover:scale-105 transition-all duration-200 ease-in-out cursor-pointer ${visibility} ${region_visibility}`}
     >
       <figure>
         <img

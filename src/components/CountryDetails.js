@@ -1,4 +1,5 @@
 import { InfoItem } from "./InfoItem";
+import { Link } from "react-router-dom";
 
 export const CountryDetails = ({ countryData }) => {
   document.title = `${countryData?.name?.common} - World Almanac`;
@@ -101,12 +102,13 @@ export const CountryDetails = ({ countryData }) => {
             <div className="flex gap-2 flex-wrap">
               {countryData?.borders
                 ? countryData?.borders?.map((border) => (
-                    <p
+                    <Link
+                      to={`/country/${border}`}
                       key={border}
                       className="px-3 py-1 bg-gray-300 rounded-md text-sm lg:text-base "
                     >
                       {border}
-                    </p>
+                    </Link>
                   ))
                 : "N/A"}
             </div>
