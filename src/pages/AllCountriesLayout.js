@@ -1,18 +1,19 @@
-import React, { useEffect, useState } from "react";
-import { Navbar, SearchBar, Spinner, CountryCard } from "../components";
+import { useQuery } from "@tanstack/react-query";
+import React, { useState } from "react";
+import { Navbar, SearchBar, CountryCard, Spinner } from "../components";
 import { RegionFilter } from "../components/RegionFilter";
 import { getAllCountries } from "../services/getAllCountries";
 
 export const AllCountriesLayout = () => {
   document.title = "World Almanac";
 
-  const [countriesData, setCountriesData] = useState(null);
+  const { isLoading, data, isError, error } = useQuery(
+    ["all-countries"],
+    getAllCountries
+  );
   const [query, setQuery] = useState(null);
   const [filter, setFilter] = useState("all");
 
-  useEffect(() => {
-    getAllCountries(setCountriesData);
-  }, []);
   return (
     <>
       <Navbar />
@@ -22,19 +23,19 @@ export const AllCountriesLayout = () => {
           <RegionFilter setFilter={setFilter} />
         </div>
         <div className="flex flex-wrap justify-between gap-16 mt-10">
-          {countriesData ? (
-            countriesData.map((country, i) => {
-              return (
-                <CountryCard
-                  data={country}
-                  key={i}
-                  query={query}
-                  filter={filter}
-                />
-              );
-            })
-          ) : (
+          {isLoading ? (
             <Spinner />
+          ) : isError ? (
+            <h2>{error.message}</h2>
+          ) : (
+            data?.data?.map((country, i) => (
+              <CountryCard
+                data={country}
+                key={i}
+                query={query}
+                filter={filter}
+              />
+            ))
           )}
         </div>
       </div>

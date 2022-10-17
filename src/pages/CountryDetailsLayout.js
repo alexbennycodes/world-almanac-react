@@ -1,20 +1,27 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
+import { useQuery } from "@tanstack/react-query";
 import { getSpecificCountry } from "../services/getSpecificCountry";
 import { CountryDetails, Navbar, Spinner } from "../components";
 import { useParams } from "react-router-dom";
 
 export const CountryDetailsLayout = () => {
   const { countryCode } = useParams();
-  const [countryData, setCountryData] = useState(null);
 
-  useEffect(() => {
-    getSpecificCountry(setCountryData, countryCode);
-  }, [countryCode]);
+  const { isLoading, data, isError, error } = useQuery(
+    ["get-country", countryCode],
+    () => getSpecificCountry(countryCode)
+  );
 
   return (
     <div>
       <Navbar />
-      {countryData ? <CountryDetails countryData={countryData} /> : <Spinner />}
+      {isLoading ? (
+        <Spinner />
+      ) : isError ? (
+        <h2>{error.message}</h2>
+      ) : (
+        <CountryDetails countryData={data?.data[0]} />
+      )}
     </div>
   );
 };
